@@ -9,7 +9,7 @@ var server = http.createServer(function (req, res) {
     //长地址转短地址接口
     if (p.pathname == "/toShort") {
         res.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
-        var _longUrl = new Buffer(p.query.longUrl, "base64").toString();//解码为参数的地址
+        var _longUrl = new Buffer(p.query.longUrl, "base64").toString();//解码特殊格式的参数
         if (utils.isUrl(_longUrl)) {
             var shortUrl = utils.setLongUrl(_longUrl);
             res.end(shortUrl);
@@ -19,7 +19,7 @@ var server = http.createServer(function (req, res) {
     }
     //短地址转长地址接口
     else if (p.pathname == "/toLong") {
-        //解码为参数的地址
+        //解码特殊格式的参数
         var longUrl = utils.getLongUrl(new Buffer(p.query.shortUrl, "base64").toString());
         res.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
         if (longUrl) {
